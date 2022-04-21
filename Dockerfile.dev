@@ -1,0 +1,17 @@
+FROM node:16-alpine
+
+# Placing folders in current working directory
+# then place them all in a folder app
+WORKDIR '/app'
+
+# what you are placing in folder app you made
+COPY package.json .
+# npm is the package manager for node js
+# puts modules in place so that node can find them
+RUN npm install
+
+# copy everything else from the project directory
+COPY . .
+
+# Run command to start up the project
+CMD ["npm", "run", "start"]

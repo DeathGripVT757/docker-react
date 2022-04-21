@@ -1,0 +1,38 @@
+version: '3'
+# list of all the contianers that will be created
+# when ran
+services:
+# 1st container name
+  web:
+  # specify the image we are going to use 
+  # to make the container
+    build:
+  # where we want all folder and files for this image to be pulled from 
+  # we want current working directory so we use .
+      context: .
+    # location of docker file to be used to buiild image
+    # this says look into current directory and look for file with below name
+    # and use this to build the image
+      dockerfile: Dockerfile.dev
+  # specify ports to use outside to in
+    ports:
+    - "3000:3000"
+  # short hand to specify diffent volumes
+    volumes:
+  # do not try map a folder up against
+  # app/node_modules inside the container
+      - /app/node_modules
+  # . means current working directory
+  # map that folder ouside of the conatiner 
+  # into the app folder inside the container
+  # basically map current directory into app folder in container
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    # override starting command when this test container is created
+    command: ["npm", "run", "test"]
