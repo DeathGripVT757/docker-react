@@ -1,0 +1,17 @@
+# telling travis we need super user permissions
+sudo: required
+language: generic
+# travis understands we need a copy of docker cli preinstalled
+services:
+  - docker
+
+# series of commands 
+# that get executed before are tests are ran
+before_install:
+# cammand to build the docker image
+  - docker build -t dickson/docker-react -f Dockerfile.dev .
+
+# all the different cmds needed to run the test suite
+# ran when the tests need to be executed
+script:
+  - docker run -e CI=true dickson/docker-react npm run test
