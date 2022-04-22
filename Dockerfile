@@ -12,6 +12,8 @@ RUN npm run build
 # specify start of a second phase
 # phases can only have one from statement
 FROM nginx
+# expose the ports for elasticbeanstalk use
+EXPOSE 80
 # copy something over from the builder phase
 # copying tyhe contents of /app/build to /usr/share/nginx/html - this is from the nginx instructions page
 COPY --from=builder /app/build /usr/share/nginx/html

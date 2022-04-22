@@ -15,3 +15,27 @@ before_install:
 # ran when the tests need to be executed
 script:
   - docker run -e CI=true dickson/docker-react npm run test
+
+# configuration to tell travis ci how to deply the app to aws
+deploy: 
+  # aws tool
+  provider: elasticbeanstalk
+  # region tool is hosted in
+  region: "us-east-1"
+  # name of the application
+  app: "docker-react"
+  # name of the environment
+  env: Dockerreact-env
+  # bucket name puts the files in a S3 bucket
+  bucket_name: elasticbeanstalk-us-east-1-821492119834
+  # path of the bucket, after creation this folder will 
+  # not be created yet so we use the same name as 
+  # our app
+  bucket_path: "docker-react"
+  # tells the flow that we only want to update when the
+  # master file gets an update
+  on:
+    branch: master
+
+  access_key_id: aws access key
+  secret_access_key: secret key
